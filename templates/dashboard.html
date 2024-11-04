@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>User Graph</h2>
+    <canvas id="ageGenderChart"></canvas>
+    <script>
+        const ageGenderData = JSON.parse('{{ data_json|safe }}');
+        
+        const labels = ageGenderData.map(item => `${item.age} (${item.gender})`);
+        const counts = ageGenderData.map(item => item.count);
+
+        new Chart(document.getElementById('ageGenderChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number of Users',
+                    data: counts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
